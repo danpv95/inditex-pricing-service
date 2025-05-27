@@ -11,3 +11,6 @@ CREATE TABLE prices (
     price DECIMAL(10,2),
     curr VARCHAR(3)
 );
+
+CREATE INDEX idx_price_lookup
+    ON prices (brand_id, product_id, start_date, end_date);

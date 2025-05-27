@@ -50,7 +50,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run tests and generate Jacoco report
-        run: ./gradlew clean test jacocoTestReport sonar --no-daemon
+        run: ./gradlew clean test jacocoTestReport --no-daemon
 
       - name: Upload Jacoco HTML report
         uses: actions/upload-artifact@v4

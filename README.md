@@ -4,6 +4,13 @@ Servicio REST que expone el precio final aplicable a un producto en una cadena d
 
 ---
 
+[![Build Status](https://github.com/danpv95/inditex-pricing-service/actions/workflows/ci-gradle.yml/badge.svg)](https://github.com/danpv95/inditex-pricing-service/actions)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=danpv95_inditex-pricing-service&metric=coverage)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/quality_gate?project=danpv95_inditex-pricing-service)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=danpv95_inditex-pricing-service&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=danpv95_inditex-pricing-service&metric=bugs)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=danpv95_inditex-pricing-service&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
+
 ## Stack técnico
 
 * Java 17

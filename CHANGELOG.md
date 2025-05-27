@@ -1,10 +1,42 @@
 # Changelog
 
-## [0.0.1] - 2025-05-27
+Todas las modificaciones relevantes de este proyecto se documentan aquí.
+
+## \[0.1.0] - 2025-05-27
 
 ### Added
-- Domain: Price entity, exceptions, input/output ports
-- Application: PriceService with use case logic
-- Infrastructure: REST controller, repository JPA adapter, mappers and DTOs
-- CI/CD pipeline with GitHub Actions, Jacoco and SonarCloud
-- Architecture documentation (C4 + UML)
+
+* Implementación completa del endpoint `GET /api/v1/prices` con lógica de prioridad, fechas y marca/producto
+* Arquitectura hexagonal: separación entre `domain`, `application`, `infrastructure` y `shared`
+* Pruebas de integración (`PriceControllerIntegrationTest`) con los 5 casos requeridos y 7 adicionales
+* Pruebas unitarias de `PriceService` (selección por prioridad y excepción controlada)
+* Pruebas unitarias de `PriceController` (caso exitoso, excepción de dominio, retorno null defensivo)
+* CI/CD automatizado con GitHub Actions, cobertura Jacoco y análisis SonarCloud
+* Documentación visual generada (diagramas UML y modelo C4)
+* Exclusión de clases sin lógica del análisis de cobertura (DTOs, mappers, excepciones)
+
+### Improved
+
+* Validaciones defensivas y diseño limpio en el modelo de dominio `Price`
+* Uso de `Mockito` para aislar tests unitarios
+* Separación estricta entre puertos y adaptadores
+* Control de versiones profesional con GitFlow por capa
+* Cobertura de lógica crítica mayor al 90%
+
+---
+
+## \[0.0.1] - 2025-05-26
+
+### Added
+
+* Estructura base del proyecto con arquitectura hexagonal
+* Configuración de Gradle, H2, JPA y Spring Boot 3.5.0
+* Consola H2 y configuración de base de datos (`application.yml`, `schema.sql`, `data.sql`)
+* Documentación técnica:
+
+    * README profesional
+    * `architecture.md`
+    * Diagramas C4: Context, Container, Component, Class
+    * Diagramas UML: Clases, Paquetes, Secuencia, Hexagonal
+* Workflows para CI/CD (`ci-gradle.yml`)
+* Integración inicial con SonarCloud y Jacoco

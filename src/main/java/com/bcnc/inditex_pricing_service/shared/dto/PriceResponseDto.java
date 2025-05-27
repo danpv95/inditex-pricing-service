@@ -13,6 +13,9 @@ public class PriceResponseDto {
     private BigDecimal price;
     private String currency;
 
+    public PriceResponseDto() {
+    }
+
     public PriceResponseDto(Long productId, Long brandId, Integer priceList,
                             LocalDateTime startDate, LocalDateTime endDate,
                             BigDecimal price, String currency) {
@@ -24,6 +27,10 @@ public class PriceResponseDto {
         this.price = price;
         this.currency = currency;
     }
+
+    public void setPrice(BigDecimal price) { this.price = price; }
+    public void setBrandId(Long brandId) { this.brandId = brandId; }
+    public void setProductId(Long productId) { this.productId = productId; }
 
     public Long getProductId() { return productId; }
     public Long getBrandId() { return brandId; }

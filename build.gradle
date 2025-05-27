@@ -1,0 +1,66 @@
+plugins {
+	id 'java'
+	id 'jacoco'
+	id 'org.springframework.boot' version '3.1.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id "org.sonarqube" version "6.2.0.5505"
+}
+
+group = 'com.bcnc'
+version = '0.0.1'
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	runtimeOnly 'com.h2database:h2'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.jacoco:org.jacoco.agent:0.8.10'
+}
+
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacoco {
+	toolVersion = "0.8.10"
+}
+
+jacocoTestReport {
+	dependsOn tasks.test
+	reports {
+		xml.required = true
+		html.required = true
+	}
+	classDirectories.setFrom(
+			fileTree(
+					dir: "$buildDir/classes/java/main",
+					excludes: [
+							'**/InditexPricingServiceApplication.*',
+							'**/dto/**',
+							'**/mapper/**',
+							'**/exception/**'
+					]
+			)
+	)
+}
+
+sonar {
+	properties {
+		property "sonar.projectKey", "danpv95_inditex-pricing-service"
+		property "sonar.organization", "danpv95"
+		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
+	}
+}
+

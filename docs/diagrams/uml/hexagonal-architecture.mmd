@@ -1,0 +1,36 @@
+graph TD
+    subgraph domain
+        DomainModel[Price]
+        PortIn[<<interface>> PriceUsecase]
+        PortOut[<<interface>> PriceRepository]
+        Exception[NoApplicablePriceException]
+    end
+
+    subgraph application
+        UseCaseService[PriceService]
+    end
+
+    subgraph infrastructure
+        Controller[PriceController]
+        JpaRepo[JpaPriceRepository]
+        SpringDataRepo[SpringDataPriceRepository]
+        Entity[PriceEntity]
+        EntityMapper[PriceEntityMapper]
+        ExceptionHandler[GlobalExceptionHandler]
+    end
+
+    subgraph shared
+        Dto[PriceResponseDto]
+        ResponseMapper[PriceResponseMapper]
+    end
+
+    Controller --> UseCaseService
+    UseCaseService --> PortOut
+    UseCaseService --> PortIn
+    UseCaseService --> ResponseMapper
+    JpaRepo --> SpringDataRepo
+    JpaRepo --> PortOut
+    JpaRepo --> EntityMapper
+    EntityMapper --> Entity
+    ResponseMapper --> Dto
+    ResponseMapper --> DomainModel

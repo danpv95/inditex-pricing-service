@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant Client
+    participant Controller as PriceController
+    participant Service as PriceService
+    participant Repository as PriceRepository
+    participant DB as H2Database
+
+    Client ->> Controller: GET /api/v1/prices
+    Controller ->> Service: getApplicablePrice(date, productId, brandId)
+    Service ->> Repository: findPricesByBrandIdAndProductId()
+    Repository ->> DB: SQL Query
+    DB -->> Repository: List<PriceEntity>
+    Repository -->> Service: List<Price>
+    Service ->> Service: filter by date and max priority
+    Service -->> Controller: Price
+    Controller -->> Client: 200 OK + PriceResponseDto

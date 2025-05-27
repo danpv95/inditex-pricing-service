@@ -1,0 +1,45 @@
+classDiagram
+    class Price {
+        - Long id
+        - Long brandId
+        - LocalDateTime startDate
+        - LocalDateTime endDate
+        - Integer priceList
+        - Long productId
+        - Integer priority
+        - BigDecimal price
+        - String currency
+    }
+
+    class PriceResponseDto
+    class PriceEntity
+    class PriceEntityMapper {
+        + toDomain(PriceEntity): Price
+        + toEntity(Price): PriceEntity
+    }
+
+    class PriceResponseMapper {
+        + toDto(Price): PriceResponseDto
+    }
+
+    class PriceService {
+        + getApplicablePrice(date, productId, brandId): Price
+    }
+
+    class PriceUsecase
+    class PriceRepository
+    class JpaPriceRepository
+    class PriceController {
+        + getPrice(...): ResponseEntity<PriceResponseDto>
+    }
+
+    class NoApplicablePriceException
+
+    PriceService --> PriceUsecase
+    PriceService --> PriceRepository
+    PriceService --> NoApplicablePriceException
+    PriceService --> PriceResponseMapper
+    JpaPriceRepository --> PriceRepository
+    PriceController --> PriceService
+    PriceEntityMapper --> PriceEntity
+    PriceResponseMapper --> PriceResponseDto

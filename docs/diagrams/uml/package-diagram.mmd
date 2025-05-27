@@ -1,0 +1,25 @@
+classDiagram
+    class domain.Price
+    class domain.PriceUsecase
+    class domain.PriceRepository
+    class domain.NoApplicablePriceException
+
+    class application.PriceService
+
+    class infrastructure.PriceController
+    class infrastructure.JpaPriceRepository
+    class infrastructure.SpringDataPriceRepository
+    class infrastructure.PriceEntity
+    class infrastructure.PriceEntityMapper
+    class infrastructure.GlobalExceptionHandler
+
+    class shared.PriceResponseDto
+    class shared.PriceResponseMapper
+
+    application.PriceService --> domain.PriceUsecase
+    application.PriceService --> domain.PriceRepository
+    infrastructure.PriceController --> application.PriceService
+    infrastructure.JpaPriceRepository --> domain.PriceRepository
+    infrastructure.SpringDataPriceRepository --> infrastructure.JpaPriceRepository
+    infrastructure.PriceEntityMapper --> infrastructure.PriceEntity
+    shared.PriceResponseMapper --> shared.PriceResponseDto

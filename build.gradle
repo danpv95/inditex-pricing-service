@@ -65,6 +65,9 @@ sonar {
 		property "sonar.tests", "src/test/java"
 		property "sonar.java.binaries", "build/classes/java/main"
 		property "sonar.junit.reportPaths", "build/test-results/test"
+		property "sonar.newCode.definition", "1"
+		property "sonar.qualitygate.wait", "true"
+
 	}
 }
 

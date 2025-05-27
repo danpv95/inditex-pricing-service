@@ -37,14 +37,17 @@ jacoco {
 }
 
 jacocoTestReport {
-	dependsOn tasks.test
+	dependsOn test
 	reports {
 		xml.required = true
 		html.required = true
 	}
+
+	def mainOutput = layout.buildDirectory.dir("classes/java/main")
+
 	classDirectories.setFrom(
 			fileTree(
-					dir: "$buildDir/classes/java/main",
+					dir: mainOutput.get().asFile,
 					excludes: [
 							'**/InditexPricingServiceApplication.*',
 							'**/dto/**',
@@ -53,22 +56,45 @@ jacocoTestReport {
 					]
 			)
 	)
+
+	additionalClassDirs.setFrom(
+			fileTree(dir: mainOutput.get().asFile)
+	)
 }
 
 sonar {
 	properties {
+		// Proyecto e identidad en SonarCloud
 		property "sonar.projectKey", "danpv95_inditex-pricing-service"
 		property "sonar.organization", "danpv95"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
+
+		// Rutas relevantes del análisis
 		property "sonar.sources", "src/main/java"
 		property "sonar.tests", "src/test/java"
 		property "sonar.java.binaries", "build/classes/java/main"
+
+		// Resultados de pruebas y cobertura
 		property "sonar.junit.reportPaths", "build/test-results/test"
+		property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
+
+		// Forzar que todo el código sea evaluado como "nuevo"
 		property "sonar.newCode.definition", "1"
+
+		// Esperar que Quality Gate se procese completamente antes de cerrar
 		property "sonar.qualitygate.wait", "true"
 
+		// Activar reporte detallado
+		property "sonar.verbose", "true"
+
+		// Incluir clases compiladas adicionales si fuera necesario (para asegurar cobertura)
+		property "sonar.inclusions", "**/*.java"
+		property "sonar.exclusions", "**/dto/**,**/mapper/**,**/exception/**,**/*Application.java"
+
+		// Política de duplicación y métricas
+		property "sonar.cpd.exclusions", "**/dto/**,**/mapper/**"
 	}
 }
+
 
 

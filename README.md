@@ -104,14 +104,6 @@ curl -X GET "http://localhost:8080/api/v1/prices?productId=35455&brandId=1&date=
 
 ---
 
-## Badges
-
-[![Build](https://github.com/danpv95/inditex-pricing-service/actions/workflows/ci-gradle.yml/badge.svg)](https://github.com/danpv95/inditex-pricing-service/actions)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bcnc_inditex-pricing-service\&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bcnc_inditex-pricing-service)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/quality_gate?project=bcnc_inditex-pricing-service)](https://sonarcloud.io/summary/new_code?id=bcnc_inditex-pricing-service)
-
----
-
 ## Arquitectura del Proyecto
 
 Este proyecto sigue una arquitectura hexagonal estructurada en capas claramente separadas:

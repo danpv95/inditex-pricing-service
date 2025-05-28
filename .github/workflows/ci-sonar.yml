@@ -1,0 +1,31 @@
+name: CI - SonarCloud
+
+on:
+  workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true
+      GITHUB_TOKEN:
+        required: true
+
+jobs:
+  sonar:
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract branch name
+        run: echo "SONAR_BRANCH=$(echo ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}})" >> $GITHUB_ENV
+
+      - name: SonarCloud Scan
+        run: ./gradlew sonar --no-daemon \
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+          -Dsonar.projectVersion=${{ github.run_number }} \
+          -Dsonar.branch.name=$SONAR_BRANCH
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

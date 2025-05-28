@@ -23,6 +23,9 @@ jobs:
         run: echo "SONAR_BRANCH=$(echo ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}})" >> $GITHUB_ENV
 
       - name: SonarCloud Scan
-        run: ./gradlew sonar --no-daemon -Dsonar.token=${{ secrets.SONAR_TOKEN }} -Dsonar.projectVersion=${{ github.run_number }} -Dsonar.branch.name=${{ github.ref_name }}
+        run: ./gradlew sonar --no-daemon \
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+          -Dsonar.projectVersion=${{ github.run_number }} \
+          -Dsonar.branch.name=$SONAR_BRANCH
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

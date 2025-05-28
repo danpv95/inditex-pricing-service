@@ -2,9 +2,17 @@ name: CI - Build & SonarCloud
 
 on:
   push:
-    branches: [develop]
+    branches:
+      - develop
+      - main
+      - release/**
+      - hotfix/**
   pull_request:
-    branches: [develop]
+    branches:
+      - develop
+      - main
+      - release/**
+      - hotfix/**
 
 permissions:
   contents: read

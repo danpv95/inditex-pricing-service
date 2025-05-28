@@ -1,0 +1,27 @@
+name: CI - Test & Coverage
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    name: Run Tests and Generate Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Grant execute permission to Gradle
+        run: chmod +x gradlew
+
+      - name: Run tests and generate Jacoco report
+        run: ./gradlew clean test jacocoTestReport --no-daemon
+
+      - name: Upload Jacoco HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-html-report
+          path: build/reports/jacoco/test/html

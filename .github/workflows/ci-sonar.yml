@@ -1,0 +1,20 @@
+name: CI - SonarCloud
+
+on:
+  workflow_call:
+
+jobs:
+  sonar:
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: SonarCloud Scan
+        run: ./gradlew sonar --no-daemon -Dsonar.token=${{ secrets.SONAR_TOKEN }} -Dsonar.projectVersion=${{ github.run_number }} -Dsonar.branch.name=${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

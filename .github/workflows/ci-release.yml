@@ -1,0 +1,37 @@
+name: CI - Full Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+      - release/**
+      - hotfix/**
+  pull_request:
+    branches:
+      - develop
+      - main
+      - release/**
+      - hotfix/**
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  security-events: write
+
+jobs:
+  call-checkout:
+    uses: ./.github/workflows/ci-checkout.yml
+
+  call-setup:
+    uses: ./.github/workflows/ci-setup.yml
+    needs: call-checkout
+
+  call-test:
+    uses: ./.github/workflows/ci-test.yml
+    needs: call-setup
+
+  call-sonar:
+    uses: ./.github/workflows/ci-sonar.yml
+    needs: call-test

@@ -1,0 +1,12 @@
+# UML
+mmdc -i docs/diagrams/uml/class-diagram.mmd -o docs/diagrams/uml/class-diagram.png
+mmdc -i docs/diagrams/uml/package-diagram.mmd -o docs/diagrams/uml/package-diagram.png
+mmdc -i docs/diagrams/uml/sequence-diagram.mmd -o docs/diagrams/uml/sequence-diagram.png
+mmdc -i docs/diagrams/uml/hexagonal-architecture.mmd -o docs/diagrams/uml/hexagonal-architecture.png
+
+# C4
+mmdc -i docs/diagrams/c4/c4-level1-context.mmd -o docs/diagrams/c4/c4-level1-context.png
+mmdc -i docs/diagrams/c4/c4-level2-container.mmd -o docs/diagrams/c4/c4-level2-container.png
+mmdc -i docs/diagrams/c4/c4-level3-component.mmd -o docs/diagrams/c4/c4-level3-component.png
+mmdc -i docs/diagrams/c4/c4-level4-class-diagram.mmd -o docs/diagrams/c4/c4-level4-class-diagram.png
+

@@ -1,0 +1,100 @@
+plugins {
+	id 'java'
+	id 'jacoco'
+	id 'org.springframework.boot' version '3.1.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id "org.sonarqube" version "6.2.0.5505"
+}
+
+group = 'com.bcnc'
+version = '0.1.4'
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	runtimeOnly 'com.h2database:h2'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.jacoco:org.jacoco.agent:0.8.10'
+}
+
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacoco {
+	toolVersion = "0.8.10"
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+		html.required = true
+	}
+
+	def mainOutput = layout.buildDirectory.dir("classes/java/main")
+
+	classDirectories.setFrom(
+			fileTree(
+					dir: mainOutput.get().asFile,
+					excludes: [
+							'**/InditexPricingServiceApplication.*',
+							'**/dto/**',
+							'**/mapper/**',
+							'**/exception/**'
+					]
+			)
+	)
+
+	additionalClassDirs.setFrom(
+			fileTree(dir: mainOutput.get().asFile)
+	)
+}
+
+sonar {
+	properties {
+		// Proyecto e identidad en SonarCloud
+		property "sonar.projectKey", "danpv95_inditex-pricing-service"
+		property "sonar.organization", "danpv95"
+		property "sonar.host.url", "https://sonarcloud.io"
+
+		// Rutas relevantes del análisis
+		property "sonar.sources", "src/main/java"
+		property "sonar.tests", "src/test/java"
+		property "sonar.java.binaries", "build/classes/java/main"
+
+		// Resultados de pruebas y cobertura
+		property "sonar.junit.reportPaths", "build/test-results/test"
+		property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
+
+		// Forzar que todo el código sea evaluado como "nuevo"
+		property "sonar.newCode.definition", "1"
+
+		// Esperar que Quality Gate se procese completamente antes de cerrar
+		property "sonar.qualitygate.wait", "true"
+
+		// Activar reporte detallado
+		property "sonar.verbose", "true"
+
+		// Incluir clases compiladas adicionales si fuera necesario (para asegurar cobertura)
+		property "sonar.inclusions", "**/*.java"
+		property "sonar.exclusions", "**/dto/**,**/mapper/**,**/exception/**,**/*Application.java"
+
+		// Política de duplicación y métricas
+		property "sonar.cpd.exclusions", "**/dto/**,**/mapper/**"
+	}
+}
+
+
+

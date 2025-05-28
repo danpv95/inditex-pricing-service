@@ -1,0 +1,29 @@
+# IntelliJ / Eclipse
+.idea/
+*.iml
+*.ipr
+*.iws
+*.class
+
+# Logs
+*.log
+
+# Gradle
+/build/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test Reports
+/test-output/
+/out/
+
+# Coverage
+jacoco.exec
+coverage-report/
+
+# Others
+.env

@@ -1,0 +1,20 @@
+graph TD
+    Controller["🌐 PriceController"]
+    Service["🧠 PriceService"]
+    InputPort["🔌 PriceUsecase"]
+    OutputPort["🔌 PriceRepository"]
+    JpaRepo["💾 JpaPriceRepository"]
+    SpringRepo["💾 SpringDataPriceRepository"]
+    Entity["📦 PriceEntity"]
+    EntityMapper["🧰 PriceEntityMapper"]
+    Dto["📤 PriceResponseDto"]
+    ResponseMapper["🧰 PriceResponseMapper"]
+
+    Controller --> Service
+    Service --> InputPort
+    Service --> OutputPort
+    JpaRepo --> OutputPort
+    JpaRepo --> EntityMapper
+    EntityMapper --> Entity
+    Service --> ResponseMapper
+    ResponseMapper --> Dto

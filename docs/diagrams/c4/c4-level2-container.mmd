@@ -1,0 +1,17 @@
+graph TD
+    Client["👤 Sistema Cliente"]
+    Controller["🌐 PriceController"]
+    Service["🧠 PriceService"]
+    Ports["🔌 PriceUsecase + PriceRepository"]
+    Adapter["💾 JpaPriceRepository"]
+    DB["🗄️ H2 In-Memory Database"]
+    Mapper["🧰 Mappers & DTOs"]
+    Exception["🛑 GlobalExceptionHandler"]
+
+    Client --> Controller
+    Controller --> Service
+    Service --> Ports
+    Ports --> Adapter
+    Adapter --> DB
+    Service --> Mapper
+    Controller --> Exception

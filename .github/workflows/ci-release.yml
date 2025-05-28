@@ -31,10 +31,10 @@ jobs:
   call-test:
     uses: ./.github/workflows/ci-test.yml
     needs: call-setup
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   call-sonar:
     uses: ./.github/workflows/ci-sonar.yml
     needs: call-test
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

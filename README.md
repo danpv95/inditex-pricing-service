@@ -9,7 +9,6 @@ Servicio REST que expone el precio final aplicable a un producto en una cadena d
 [![Gradle](https://img.shields.io/badge/Gradle-8.10.2-blue.svg)](https://gradle.org/)
 [![H2 Database](https://img.shields.io/badge/H2%20Database-in_memory-yellowgreen.svg)](http://www.h2database.com/html/main.html)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/license/mit/)
-![Coverage](https://img.shields.io/badge/Coverage-85%25-brightgreen)
 [![Build Status](https://github.com/danpv95/inditex-pricing-service/actions/workflows/ci-gradle.yml/badge.svg)](https://github.com/danpv95/inditex-pricing-service/actions)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=danpv95_inditex-pricing-service&metric=coverage)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=danpv95_inditex-pricing-service&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)

@@ -135,7 +135,6 @@ El sistema se inicializa automáticamente con los siguientes precios para el pro
 
 - **Arquitectura detallada:** [docs/architecture.md](./docs/architecture.md)
 - **Historial de cambios:** [CHANGELOG.md](./CHANGELOG.md)
-- **Diagramas técnicos:** `docs/diagrams/`
 
 ## Autor
 

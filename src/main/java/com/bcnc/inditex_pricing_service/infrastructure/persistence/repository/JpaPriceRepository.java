@@ -5,7 +5,9 @@ import com.bcnc.inditex_pricing_service.domain.port.output.PriceRepository;
 import com.bcnc.inditex_pricing_service.infrastructure.persistence.mapper.PriceEntityMapper;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class JpaPriceRepository implements PriceRepository {
@@ -20,11 +22,12 @@ public class JpaPriceRepository implements PriceRepository {
     }
 
     @Override
-    public List<Price> findByProductIdAndBrandId(Long productId, Long brandId) {
-        return repository
-                .findByProductIdAndBrandIdOrderByPriorityDescStartDateDesc(productId, brandId)
+    public Optional<Price> findByProductIdAndBrandId(Long productId, Long brandId, LocalDateTime applicationDate) {
+        List<Price> results = repository.findByProductIdAndBrandId(productId, brandId, applicationDate)
                 .stream()
                 .map(mapper::toDomain)
                 .toList();
+        return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
     }
+
 }

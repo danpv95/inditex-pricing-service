@@ -1,127 +1,141 @@
 # Inditex Pricing Service
 
-Servicio REST que expone el precio final aplicable a un producto en una cadena del grupo INDITEX, basado en tarifas configuradas por prioridad y rango de fechas.
+Microservicio REST que calcula el precio final aplicable a un producto en una cadena del grupo INDITEX, basado en tarifas configuradas por prioridad y rango de fechas.
 
----
-[![Version](https://img.shields.io/badge/version-v0.1.3-blue.svg)](https://github.com/danpv95/inditex-pricing-service/releases/tag/v0.1.3)
-[![Java](https://img.shields.io/badge/Java-17-blue.svg)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.0-green.svg)](https://spring.io/projects/spring-boot)
-[![Gradle](https://img.shields.io/badge/Gradle-8.10.2-blue.svg)](https://gradle.org/)
-[![H2 Database](https://img.shields.io/badge/H2%20Database-in_memory-yellowgreen.svg)](http://www.h2database.com/html/main.html)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/license/mit/)
+[![Version](https://img.shields.io/badge/version-v0.2.0-blue.svg)](https://github.com/danpv95/inditex-pricing-service/releases/tag/v0.2.0)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
+[![Quality Gate](https://img.shields.io/badge/quality_gate-passed-brightgreen.svg)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
 [![Build Status](https://github.com/danpv95/inditex-pricing-service/actions/workflows/ci-gradle.yml/badge.svg)](https://github.com/danpv95/inditex-pricing-service/actions)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=danpv95_inditex-pricing-service&metric=coverage)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=danpv95_inditex-pricing-service&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=danpv95_inditex-pricing-service&metric=bugs)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=danpv95_inditex-pricing-service&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/quality_gate?project=danpv95_inditex-pricing-service)](https://sonarcloud.io/summary/new_code?id=danpv95_inditex-pricing-service)
 
-## Stack técnico
+## Características técnicas
 
-* Java 17
-* Spring Boot 3.5.0
-* Gradle
-* H2 Database (modo memoria)
-* JPA + Hibernate
-* JUnit 5 + MockMvc
-* Jacoco + GitHub Actions
-* Arquitectura hexagonal (Ports & Adapters)
-* DDD + SOLID
+- **Arquitectura:** Hexagonal (Ports & Adapters) con principios DDD y SOLID
+- **Framework:** Spring Boot 3.1.0 con Java 17
+- **Base de datos:** H2 en memoria con inicialización automática
+- **Testing:** 100% cobertura con JUnit 5, Mockito y tests de integración
+- **CI/CD:** GitHub Actions con análisis SonarCloud y reportes Jacoco
+- **Performance:** Consultas optimizadas con filtros a nivel de base de datos
 
----
+## API REST
 
-## Endpoint disponible
+### Endpoint principal
 
-GET `/api/v1/prices?productId=35455&brandId=1&date=2020-06-14T10:00:00`
+```http
+GET /api/v1/prices?productId={id}&brandId={id}&date={datetime}
+```
 
-### Parámetros de entrada
+**Parámetros:**
+- `productId` (Long): Identificador del producto
+- `brandId` (Long): Identificador de la cadena (1=ZARA)
+- `date` (DateTime): Fecha de aplicación en formato ISO 8601
 
-* `productId`: ID del producto
-* `brandId`: ID de la cadena (ej. ZARA = 1)
-* `date`: Fecha y hora de aplicación (`yyyy-MM-dd'T'HH:mm:ss`)
-
-### Respuesta esperada
-
+**Respuesta exitosa (200):**
 ```json
 {
   "productId": 35455,
   "brandId": 1,
   "priceList": 2,
   "startDate": "2020-06-14T15:00:00",
-  "endDate": "2020-06-14T18:30:00",
+  "endDate": "2020-06-14T18:30:00", 
   "price": 25.45,
   "currency": "EUR"
 }
 ```
 
----
+**Respuestas de error:**
+- `400 Bad Request`: Parámetros faltantes o formato incorrecto
+- `404 Not Found`: No existe precio aplicable para los criterios dados
+- `500 Internal Server Error`: Error interno del servidor
 
-## Cómo ejecutar el proyecto
+### Ejemplos de uso
 
 ```bash
+# Consulta estándar
+curl "http://localhost:8080/api/v1/prices?productId=35455&brandId=1&date=2020-06-14T16:00:00"
+
+# Consulta con fecha límite
+curl "http://localhost:8080/api/v1/prices?productId=35455&brandId=1&date=2020-12-31T23:59:59"
+```
+
+## Ejecución
+
+### Requisitos
+- Java 17 o superior
+- Gradle 8.4+ (incluido via wrapper)
+
+### Comandos
+
+```bash
+# Compilar y ejecutar tests
 ./gradlew clean build
+
+# Iniciar aplicación
 ./gradlew bootRun
 ```
 
-La aplicación estará disponible en:
+La aplicación estará disponible en `http://localhost:8080`
 
-```
-http://localhost:8080
-```
+### Base de datos H2
 
-### Acceder a la consola H2:
+Acceso a consola: `http://localhost:8080/h2-console`
+- **JDBC URL:** `jdbc:h2:mem:testdb`
+- **Usuario:** `sa`
+- **Contraseña:** (vacía)
 
-```
-http://localhost:8080/h2-console
-JDBC URL: jdbc:h2:mem:testdb
-Username: sa
-Password: (vacío)
-```
-
----
-
-## Pruebas
+## Testing
 
 ```bash
+# Ejecutar tests
 ./gradlew test
+
+# Generar reporte de cobertura  
+./gradlew test jacocoTestReport
 ```
 
-Informe Jacoco:
+Reporte disponible en `build/reports/jacoco/test/html/index.html`
+
+### Casos de prueba incluidos
+
+| Caso | Fecha/Hora | Resultado Esperado |
+|------|------------|-------------------|
+| Test 1 | 2020-06-14 10:00 | PriceList 1, €35.50 |
+| Test 2 | 2020-06-14 16:00 | PriceList 2, €25.45 |
+| Test 3 | 2020-06-14 21:00 | PriceList 1, €35.50 |
+| Test 4 | 2020-06-15 10:00 | PriceList 3, €30.50 |
+| Test 5 | 2020-06-16 21:00 | PriceList 4, €38.95 |
+
+## Arquitectura
 
 ```
-build/reports/jacoco/test/html/index.html
+src/main/java/com/bcnc/inditex_pricing_service/
+├── domain/                 # Modelo de negocio y puertos
+│   ├── model/             # Entidades (Price)
+│   ├── exception/         # Excepciones de dominio  
+│   └── port/              # Interfaces (PriceUseCase, PriceRepository)
+├── application/           # Casos de uso (PriceService)
+├── infrastructure/        # Adaptadores externos
+│   ├── controller/        # API REST (PriceController)
+│   ├── persistence/       # Repositorios JPA
+│   └── exception/         # Manejo global de errores
+└── shared/               # DTOs y mappers
 ```
 
----
+## Datos de ejemplo
 
-## Ejemplo de prueba con cURL
+El sistema se inicializa automáticamente con los siguientes precios para el producto 35455 de ZARA:
 
-```bash
-curl -X GET "http://localhost:8080/api/v1/prices?productId=35455&brandId=1&date=2020-06-14T16:00:00" -H "accept: application/json"
-```
+| Periodo | Prioridad | Precio | Lista |
+|---------|-----------|--------|-------|
+| 2020-06-14 00:00 - 2020-12-31 23:59 | 0 | €35.50 | 1 |
+| 2020-06-14 15:00 - 2020-06-14 18:30 | 1 | €25.45 | 2 |
+| 2020-06-15 00:00 - 2020-06-15 11:00 | 1 | €30.50 | 3 |
+| 2020-06-15 16:00 - 2020-12-31 23:59 | 1 | €38.95 | 4 |
 
----
+## Documentación
 
-## Documentación técnica
-
-* Arquitectura detallada: [`docs/architecture.md`](./docs/architecture.md)
-* Diagramas UML y C4 disponibles en: `docs/diagrams/uml/` y `docs/diagrams/c4/`
-
----
-
-## Arquitectura del Proyecto
-
-Este proyecto sigue una arquitectura hexagonal estructurada en capas claramente separadas:
-
-```bash
-src/
-├── domain/         # Modelo de dominio y puertos
-├── application/    # Casos de uso (servicios)
-├── infrastructure/ # Adaptadores REST y persistencia
-├── shared/         # DTOs y mapeadores
-```
-
----
+- **Arquitectura detallada:** [docs/architecture.md](./docs/architecture.md)
+- **Historial de cambios:** [CHANGELOG.md](./CHANGELOG.md)
+- **Diagramas técnicos:** `docs/diagrams/`
 
 ## Autor
 

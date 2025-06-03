@@ -149,12 +149,8 @@ class GlobalExceptionHandlerTest {
 
         ErrorResponseDto errorDto = response.getBody();
 
-        // Verify all fields are present and not null
         assertNotNull(errorDto.getCode());
         assertNotNull(errorDto.getMessage());
-        assertNotNull(errorDto.getStatus());
-
-        // Verify field values are valid
         assertFalse(errorDto.getCode().isEmpty());
         assertFalse(errorDto.getMessage().isEmpty());
         assertTrue(errorDto.getStatus() > 0);

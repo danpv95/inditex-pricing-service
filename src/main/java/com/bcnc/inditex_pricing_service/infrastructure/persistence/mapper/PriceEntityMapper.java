@@ -20,19 +20,5 @@ public class PriceEntityMapper {
                 entity.getCurrency()
         );
     }
-
-    public PriceEntity toEntity(Price price) {
-        return new PriceEntity(
-                price.getBrandId(),
-                price.getStartDate(),
-                price.getEndDate(),
-                price.getPriceList(),
-                price.getProductId(),
-                price.getPriority(),
-                price.getPrice(),
-                price.getCurrency()
-        );
-    }
-
 }
 

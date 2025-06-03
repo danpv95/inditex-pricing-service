@@ -20,9 +20,7 @@ public class PriceService implements PriceUseCase {
 
     @Override
     public Price getApplicablePrice(Long productId, Long brandId, LocalDateTime applicationDate) {
-        return priceRepository.findByProductIdAndBrandId(productId, brandId).stream()
-                .filter(p -> !applicationDate.isBefore(p.getStartDate()) && !applicationDate.isAfter(p.getEndDate()))
-                .max(Comparator.comparingInt(Price::getPriority))
+        return priceRepository.findByProductIdAndBrandId(productId, brandId, applicationDate)
                 .orElseThrow(() -> new NoApplicablePriceException(productId, brandId));
     }
 
